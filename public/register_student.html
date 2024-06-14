@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生登録 - OB Connect</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>OB Connect - 学生登録</h1>
+    </header>
+    <div id="sendForm">
+        <form id="registerForm">
+            <label for="name">名前:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">メール:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="password">パスワード:</label>
+            <input type="password" id="password" name="password" required>
+            <input type="hidden" id="role" name="role" value="student">
+            <button type="submit">登録</button>
+        </form>
+        <div id="message"></div>
+    </div>
+    <div id="verificate"hidden>
+        <h1>認証</h1>
+        <form id="varificateForm">
+            <input type="number" id="code" name="code" style="" placeholder="認証コードを入力">
+            <button type="submit">Submit</button>
+        </form>
+        <div id="message2"></div>
+    </div>
+    <script src="scripts/register.js"></script>
+</body>
+</html>
