@@ -1,4 +1,4 @@
-window.addEventListener('DOMContentLoaded', async () => {
+/*window.addEventListener('DOMContentLoaded', async () => {
     const user = JSON.parse(sessionStorage.getItem('user'));
     const email = user.email
     const status = sessionStorage.getItem('status');
@@ -13,7 +13,78 @@ window.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('sendForm').hidden = false
         document.getElementById('verificate').hidden = true
     }
-});
+});*/
+window.addEventListener('DOMContentLoaded', async() => {
+    document.getElementById('loading').hidden = false
+    document.getElementById('sendForm').hidden = true
+    document.getElementById('verificate').hidden = true
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    const email = user.email
+    const status = await fetch('/checkStatus', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: email })
+    })
+    const result = await status.json();
+    console.log(result)
+    if (result.status === "temp"){
+        console.log("temp")
+        document.getElementById('loading').hidden = true
+        document.getElementById('sendForm').hidden = true
+        document.getElementById('verificate').hidden = false
+    }else if(result.status === "login"){
+        console.log("login")
+        window.location.href = '/mypage.html';
+    }else{
+        console.log("else")
+        document.getElementById('loading').hidden = true
+        document.getElementById('sendForm').hidden = false
+        document.getElementById('verificate').hidden = true
+    }
+    sessionStorage.setItem('status', result);
+})
+
+async function checkStatus(email){
+    const status = await fetch('/checkStatus', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: email })
+    })
+    const result = await status.json();
+    console.log(result)
+    return result.status
+}
+
+/*window.onload = async function(){
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    if(!user) {
+        window.location.href = '/register_student.html';
+    }
+    const email = user.email
+    const status = await fetch('/checkStatus', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: email })
+    })
+    const status = await status.json();
+    console.log(result)
+    if (status === "temp"){
+        document.getElementById('sendForm').hidden = true
+        document.getElementById('verificate').hidden = false
+    }else if(status === "login"){
+        window.location.href = '/mypage.html';
+    }else{
+        document.getElementById('sendForm').hidden = false
+        document.getElementById('verificate').hidden = true
+    }
+    sessionStorage.setItem('status', result);
+}*/
 document.getElementById('registerForm').addEventListener('submit', async (event) => {
     event.preventDefault();
 

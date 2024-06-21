@@ -18,8 +18,6 @@ window.addEventListener('DOMContentLoaded', () => {
             },
             body: JSON.stringify({ email: user.email })
         })
-        localStorage.setItem('status', 'logout');
-        sessionStorage.removeItem('user');
         window.location.href = '/login.html';
     });
 });

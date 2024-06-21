@@ -1,26 +1,125 @@
+/* General Styles */
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
+    display: flex;
+    flex-direction:column;
+    align-items:center;
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
 }
 
+/* Layout */
+header {
+    background-color: #fca400;
+    color: white;
+    padding: 10px 0;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 16px;
+    display: inline-block;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+nav ul li a:hover {
+    background-color: #fca400;
+}
+
+main {
+    display: flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 8px;
+}
+div {
+    width:100%;
+}
+.conteiner {
+    display: flex;
+    flex-direction:column;
+    align-items:center; 
+    padding: 20px;
+    width: 50%;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+main h2 {
+    margin-top: 0;
+    font-size: 22px;
+    color: #fca400;
+}
+
+main p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/* Forms */
 form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-bottom: 20px;
+    width: 100%;
 }
 
 input, select, button {
     display: block;
     margin: 10px 0;
     padding: 10px;
-    width: 100%;
-    max-width: 300px;
+    width: 70%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 button {
     cursor: pointer;
+    background-color: #fca400;
+    color: white;
+    border: none;
+    transition: background-color 0.3s ease;
 }
 
-input[type="number"]::-webkit-outer-spin-button, 
-input[type="number"]::-webkit-inner-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
-} 
+button:hover {
+    background-color: #fca400;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
