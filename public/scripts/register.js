@@ -19,6 +19,11 @@ window.addEventListener('DOMContentLoaded', async() => {
     document.getElementById('sendForm').hidden = true
     document.getElementById('verificate').hidden = true
     const user = JSON.parse(sessionStorage.getItem('user'));
+    if (!user){
+        document.getElementById('loading').hidden = true
+        document.getElementById('sendForm').hidden = false
+        document.getElementById('verificate').hidden = true
+    }
     const email = user.email
     const status = await fetch('/checkStatus', {
         method: 'POST',
