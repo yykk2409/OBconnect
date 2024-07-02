@@ -13,13 +13,18 @@
     
     <main>
         <div class="conteiner">
-        <form id="loginForm">
-            <label for="email">メール</label>
-            <input type="email" id="email" name="email" required>
-            <label for="password">パスワード</label>
-            <input type="password" id="password" name="password" required>
-            <button type="submit">ログイン</button>
-        </form>
+            <div width="100%" id="loading">
+                <h2 style="text-align: center;">ロード中...</h2>
+            </div>
+            <div width="100%" id="sendForm" hidden>
+                <form id="loginForm">
+                    <label for="email">メール</label>
+                    <input type="email" id="email" name="email" required>
+                    <label for="password">パスワード</label>
+                    <input type="password" id="password" name="password" required>
+                    <button type="submit">ログイン</button>
+                </form>
+                </div>
         <div id="message"></div>
         </div>
     </main>
