@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF Upload to Google Drive</title>
+</head>
+<body>
+    <h1>Google Drive に PDF をアップロード</h1>
+    <form id="uploadForm">
+      <input type="file" id="file-input" accept=".pdf">
+      <input type="submit" value="アップロード">
+    </form>
+    <br>
+    <a id="file-url" href="#" target="_blank">PDF URL</a>
+
+    <script>
+      document.getElementById('uploadForm').onsubmit = function(event) {
+        event.preventDefault();
+        var fileInput = document.getElementById('file-input');
+        var file = fileInput.files[0];
+
+        if (file) {
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            var base64File = btoa(e.target.result);
+            var formData = {
+              base64File: base64File,
+              fileName: file.name,
+              mimeType: file.type
+            };
+
+            fetch('/proxy', {
+                method: 'POST',
+                body: JSON.stringify(formData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+              if (data.url) {
+                document.getElementById('file-url').href = data.url;
+                document.getElementById('file-url').innerText = data.url;
+              } else {
+                alert('アップロードに失敗しました: ' + data.error);
+              }
+            })
+            .catch(error => {
+              alert('アップロードに失敗しました: ' + error.message);
+            });
+          };
+          reader.readAsBinaryString(file);
+        } else {
+          alert('ファイルを選択してください');
+        }
+      };
+    </script>
+</body>
+</html>
