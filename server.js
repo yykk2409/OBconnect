@@ -4,30 +4,13 @@ import { updateProfile } from './controllers/profileController.js';
 import { findMatches } from './controllers/matchController.js';
 import bodyParser from 'body-parser';
 import path from 'path';
-
+import multer from 'multer'
+const upload = multer();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.static('public'));
 app.use(express.json());
-app.use(express.json({ extended: true, limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-app.post('/proxy', async (req, res) => {
-  console.log('Received request size:', JSON.stringify(req.body).length);
-  try {
-    const response = await fetch('https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(req.body)
-    });
-
-    const data = await response.json();
-    res.json(data);
-  } catch (error) {
-    console.error('Error:', error.message);
-    res.status(500).json({ error: error.message });
-  }
-});
 
 // エラーハンドリング
 app.use((err, req, res, next) => {
@@ -37,7 +20,7 @@ app.use((err, req, res, next) => {
     res.status(500).json({ error: err.message });
   }
 });
-app.post('/tempregister', tempregisterUser);
+app.post('/tempregister', upload.single('file'), tempregisterUser);
 app.post('/register', registerUser);
 app.post('/login', loginUser);
 app.post('/logout', logoutUser);

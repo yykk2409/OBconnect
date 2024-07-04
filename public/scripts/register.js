@@ -50,36 +50,32 @@ async function checkStatus(email){
     return result.status
 }
 
-
 document.getElementById('registerForm').addEventListener('submit', async (event) => {
     event.preventDefault();
-
     const form = event.target;
     const formData = new FormData(form);
-    const data = Object.fromEntries(formData);
-    sessionStorage.setItem('user', JSON.stringify(data));
+
+    sessionStorage.setItem('user', JSON.stringify(Object.fromEntries(formData)));
 
     try {
         const response = await fetch('/tempregister', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+            body: formData // FormData そのまま送信
         });
 
-        const result = await response.json(); // 一度だけ response.json() を呼び出す
+        const result = await response.json();
         console.log('Server Response:', result);
+
         if (result.status === "success"){
-            document.getElementById('sendForm').hidden = true
-            document.getElementById('verificate').hidden = false
+            document.getElementById('sendForm').hidden = true;
+            document.getElementById('verificate').hidden = false;
         }
-        document.getElementById('message').textContent = result.message; // 修正: 'massage' を 'message' に変更
+        document.getElementById('message').textContent = result.message;
     } catch (error) {
         console.error('Error:', error);
         document.getElementById('message').textContent = '登録に失敗しました';
     }
-});
+  });
 
 document.getElementById('varificateForm').addEventListener('submit', async (event) => {
     event.preventDefault();

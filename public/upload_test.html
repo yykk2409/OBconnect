@@ -19,36 +19,25 @@
         var file = fileInput.files[0];
 
         if (file) {
-          var reader = new FileReader();
-          reader.onload = function(e) {
-            var base64File = btoa(e.target.result);
-            var formData = {
-              base64File: base64File,
-              fileName: file.name,
-              mimeType: file.type
-            };
+          var formData = new FormData();
+          formData.append('file', file);
 
-            fetch('/proxy', {
-                method: 'POST',
-                body: JSON.stringify(formData),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-              if (data.url) {
-                document.getElementById('file-url').href = data.url;
-                document.getElementById('file-url').innerText = data.url;
-              } else {
-                alert('アップロードに失敗しました: ' + data.error);
-              }
-            })
-            .catch(error => {
-              alert('アップロードに失敗しました: ' + error.message);
-            });
-          };
-          reader.readAsBinaryString(file);
+          fetch('/proxy', {
+              method: 'POST',
+              body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.url) {
+              document.getElementById('file-url').href = data.url;
+              document.getElementById('file-url').innerText = data.url;
+            } else {
+              alert('アップロードに失敗しました: ' + data.error);
+            }
+          })
+          .catch(error => {
+            alert('アップロードに失敗しました: ' + error.message);
+          });
         } else {
           alert('ファイルを選択してください');
         }
